@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText editText;
+    TextView editText;
     Button ac, back, percent, divide, times, minus, plus, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, dot, _p_n, equal;
+    String num = "";
+    Double cal, cal2;
+    Integer flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,82 +69,162 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ac:
-                editText.setText("");
-                break;
+        try {
+            switch (view.getId()) {
+                case R.id.ac:
+                    num = "";
+                    editText.setText(num);
+                    break;
 
 
-            case R.id.back:
-                break;
+                case R.id.back:
+                    num = num.substring(0, num.length() - 1);
+                    editText.setText(num);
+                    break;
 
 
-            case R.id.percent:
-                break;
+                case R.id.percent:
+                    cal = Double.parseDouble(num);
+                    cal /= 100;
+                    editText.setText(cal.toString());
+                    break;
 
-            case R.id.divide:
-                break;
-
-            case R.id.times:
-                break;
-
-            case R.id.minus:
-                break;
-
-            case R.id.plus:
-                break;
+                case R.id.divide:
+                    cal2 = Double.parseDouble(num);
+                    num = "";
+                    editText.setText(num);
+                    flag = 4;
+                    break;
 
 
-            case R.id._0:
-                break;
+                case R.id.times:
+                    cal2 = Double.parseDouble(num);
+                    num = "";
+                    editText.setText(num);
+                    flag = 3;
+                    break;
 
 
-            case R.id._1:
-                break;
+                case R.id.minus:
+                    cal2 = Double.parseDouble(num);
+                    num = "";
+                    editText.setText(num);
+                    flag = 2;
+                    break;
+
+                case R.id.plus:
+                    cal2 = Double.parseDouble(num);
+                    num = "";
+                    editText.setText(num);
+                    flag = 1;
+                    break;
 
 
-            case R.id._2:
-                break;
+                case R.id._0:
+                    num += '0';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._3:
-                break;
+                case R.id._1:
+                    num += '1';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._4:
-                break;
+                case R.id._2:
+                    num += '2';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._5:
-                break;
+                case R.id._3:
+                    num += '3';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._6:
-                break;
+                case R.id._4:
+                    num += '4';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._7:
-                break;
+                case R.id._5:
+                    num += '5';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._8:
-                break;
+                case R.id._6:
+                    num += '6';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._9:
-                break;
+                case R.id._7:
+                    num += '7';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id.dot:
-                break;
+                case R.id._8:
+                    num += '8';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id._p_n:
-                break;
+                case R.id._9:
+                    num += '9';
+                    editText.setText(num);
+                    break;
 
 
-            case R.id.equal:
-                break;
+                case R.id.dot:
+                    num += '.';
+                    editText.setText(num);
+                    break;
+
+
+                case R.id._p_n:
+                    cal = Double.parseDouble(num);
+                    cal *= -1;
+                    editText.setText(cal.toString());
+                    break;
+
+
+                case R.id.equal:
+                    cal = Double.parseDouble(num);
+                    switch (flag) {
+                        case 1:
+                            cal = cal2 + cal;
+                            editText.setText(cal.toString());
+                            break;
+                        case 2:
+                            cal = cal2 - cal;
+                            editText.setText(cal.toString());
+                            break;
+                        case 3:
+                            cal = cal2 * cal;
+                            editText.setText(cal.toString());
+                            break;
+                        case 4:
+                            cal = cal2 / cal;
+                            editText.setText(cal.toString());
+                            break;
+                    }
+                    num = "";
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    editText.setText("Error");
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
 
